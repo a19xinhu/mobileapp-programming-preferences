@@ -36,27 +36,17 @@
         android:layout_gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintBottom_toTopOf="@+id/settingseditview" />
-
-    <EditText
-        android:id="@+id/settingseditview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prefText" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
     <Button
-        android:id="@+id/prefButton"
+        android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="savePref"
-        android:text="@string/save"
+
+        android:text="Launch Second activity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingseditview" />
+        app:layout_constraintTop_toBottomOf="@+id/prefText"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
