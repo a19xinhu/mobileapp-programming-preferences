@@ -1,42 +1,101 @@
 
 # Rapport
 
-**Skriv din rapport här!**
+1.  Add textview and button at activity_main.xml file. 
+    Textview used to show text from shared preference. 
+    Button used to start second activity. 
+```
+<TextView
+        android:id="@+id/prefText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pref"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"/>
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+    <Button
+        android:id="@+id/start_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Launch Second activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prefText"/>
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+2.  Add SecondActivity.java file and activity_second.xml layout file.
+    Add EditText and Button at layout file. 
+    Edittext view is used to write some word. Button is used to do function onclick().
+```
+<EditText
+        android:id="@+id/settingseditview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save and return"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingseditview" />
+```
+3. Add code about shared preference at second activity.    
+   Add shared preference code and button function code.
+   Code is used to save the word to shared preference and close this activity.
+```
+        myPreferenceRef = getSharedPreferences("MyPreferencesName", MODE_PRIVATE);
+        myPreferenceEditor = myPreferenceRef.edit();
+
+        saveButton =  findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonClick();
+            }
+            
+       private void onButtonClick(){
+        editView = findViewById(R.id.settingseditview);
+        myPreferenceEditor.putString("MyAppPreferenceString",editView.getText().toString());
+        myPreferenceEditor.apply();
+        finish();
     }
-}
+```
+4.  Add code at button about launch second activity in the MainActivity.java.
+```
+        startButton = findViewById(R.id.start_button);
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onButtonClick();
+            }
+        });
+        
+        private void onButtonClick(){
+            Intent intent = new Intent(this,SecondActivity.class);
+            startActivity(intent);
+        }
+```
+5.  Add a new function onResuem() at MainActivity.java. Add some code in the function.
+    Function can get the word from SecondActivity by using shared preference.
+```
+    protected void onResume() {
+        super.onResume();
+       
+        myPreferenceRef = getSharedPreferences("MyPreferencesName", MODE_PRIVATE);
+        prefTextRef=findViewById(R.id.prefText);
+        prefTextRef.setText(myPreferenceRef.getString("MyAppPreferenceString", "No preference found."));
+    }
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Bilder
 
 ![](android.png)
 
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.

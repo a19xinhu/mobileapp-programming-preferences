@@ -1,3 +1,4 @@
 <resources>
+    <string name="app_name">save</string>
     <string name="save">save</string>
 </resources>
