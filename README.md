@@ -97,5 +97,7 @@
 
 Bilder
 
-![](android.png)
+![](pref1.png)
+
+![](pref2.png)
 
